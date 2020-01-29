@@ -1,3 +1,20 @@
+@import "global";
+
 body {
-    background-color: lightgray;
+    background-color: $primary;
+    color:$secondary;
+}
+
+//style navbar
+
+.navbarBackground{
+    border-bottom: 1px solid $secondary;
+}
+
+//style footer
+.footerBackground {
+    background-image: url('/img/fond_footer.jpeg');
+    background-size: contain;
+    border-top: 1px solid $secondary;
+    width: 100%;
 }
