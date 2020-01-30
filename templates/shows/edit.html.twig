@@ -1,0 +1,15 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Edit Shows{% endblock %}
+
+{% block body %}
+    <div class="container">
+    <h1>Edit Shows</h1>
+
+    {{ include('shows/_form.html.twig', {'button_label': 'Update'}) }}
+
+    <a  class="fontColorSecondary nav-item nav-link" href="{{ path('shows_index') }}">back to list</a>
+
+    {{ include('shows/_delete_form.html.twig') }}
+    </div>
+{% endblock %}

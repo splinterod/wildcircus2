@@ -1,4 +1,5 @@
 @import "global";
+@import "cssLogin.scss";
 
 body {
     background-color: $primary;
@@ -17,4 +18,26 @@ body {
     background-size: contain;
     border-top: 1px solid $secondary;
     width: 100%;
+    color:$primary;
+}
+
+.table{
+    color:$secondary;
+}
+
+.fontColorSecondary {
+    color:$secondary;
+}
+
+.backgroundPrimary{
+ background-color: $primary;
+        color:$secondary;
+}
+
+.borderWhiteBottom{
+    border-bottom: 1px solid $secondary;
+}
+
+a:onfocus{
+    color:green;
 }

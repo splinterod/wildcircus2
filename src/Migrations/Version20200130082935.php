@@ -10,7 +10,7 @@ use Doctrine\Migrations\AbstractMigration;
 /**
  * Auto-generated Migration: Please modify to your needs!
  */
-final class Version20200129092719 extends AbstractMigration
+final class Version20200130082935 extends AbstractMigration
 {
     public function getDescription() : string
     {
@@ -22,8 +22,9 @@ final class Version20200129092719 extends AbstractMigration
         // this up() migration is auto-generated, please modify it to your needs
         $this->abortIf($this->connection->getDatabasePlatform()->getName() !== 'mysql', 'Migration can only be executed safely on \'mysql\'.');
 
-        $this->addSql('CREATE TABLE organisation (id INT AUTO_INCREMENT NOT NULL, name VARCHAR(255) DEFAULT NULL, firstname VARCHAR(255) DEFAULT NULL, lastname VARCHAR(255) DEFAULT NULL, mail VARCHAR(255) DEFAULT NULL, PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
-        $this->addSql('CREATE TABLE artistes (id INT AUTO_INCREMENT NOT NULL, name VARCHAR(255) DEFAULT NULL, firstname VARCHAR(255) DEFAULT NULL, lastname VARCHAR(255) DEFAULT NULL, mail VARCHAR(255) DEFAULT NULL, style VARCHAR(255) DEFAULT NULL, price DOUBLE PRECISION DEFAULT NULL, PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
+        $this->addSql('ALTER TABLE shows ADD artistes_id INT DEFAULT NULL');
+        $this->addSql('ALTER TABLE shows ADD CONSTRAINT FK_6C3BF14496E1EAF4 FOREIGN KEY (artistes_id) REFERENCES artistes (id)');
+        $this->addSql('CREATE INDEX IDX_6C3BF14496E1EAF4 ON shows (artistes_id)');
     }
 
     public function down(Schema $schema) : void
@@ -31,8 +32,8 @@ final class Version20200129092719 extends AbstractMigration
         // this down() migration is auto-generated, please modify it to your needs
         $this->abortIf($this->connection->getDatabasePlatform()->getName() !== 'mysql', 'Migration can only be executed safely on \'mysql\'.');
 
-
-        $this->addSql('DROP TABLE organisation');
-        $this->addSql('DROP TABLE artistes');
+        $this->addSql('ALTER TABLE shows DROP FOREIGN KEY FK_6C3BF14496E1EAF4');
+        $this->addSql('DROP INDEX IDX_6C3BF14496E1EAF4 ON shows');
+        $this->addSql('ALTER TABLE shows DROP artistes_id');
     }
 }

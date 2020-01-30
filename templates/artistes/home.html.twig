@@ -1,0 +1,68 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <div class="container">
+        <div class="row">
+            {% if is_granted('ROLE_USER') %}
+                <a class="nav-item nav-link nav-item nav-link " href="{{ path('app_logout') }}">J'ai plus envie d'etre
+                    connecté</a>
+            {% else %}
+                <a class="nav-item nav-link fontColorSecondary" href="{{ path('app_logout') }}">J'ai très très envie de
+                    m'inscrire</a>
+                <a class="nav-item nav-link fontColorSecondary" href="{{ path('app_login') }}">Je veux me connecter</a>
+            {% endif %}
+        </div>
+
+        {#        card presentation artistes #}
+        {%  if user is not null %}
+        <div class="row">
+            <div class="card border-light text-white bg-dark mb-3 w-100" >
+                <div class="row no-gutters">
+                    <div class="col-md-4">
+                        <img src="{{ user.picture }}" class="card-img img-thumbnail" style="max-height: 300px;">
+                    </div>
+                    <div class="col-md-8">
+                        <div class="card-body">
+                            <h5 class="card-title">{{ user.name }}</h5>
+                            <p class="card-text"> Mon style Artistique est: {{ user.style }}</p>
+                            <p class="card-text"><small class="text-muted">Faut pas le dire mais je
+                                    coute {{ user.price }} par show</small></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {#        card presentation show #}
+        <div class="row">
+            <h3 class="borderWhiteBottom">Mes shows</h3>
+                <a class="nav-item nav-link fontColorSecondary" href="{{ path('shows_new') }}">Ajouter un super
+                    Pectacles</a>
+        </div>
+{#            presentation des shows d' un artiste#}
+            {% for show in user.shows %}
+                <div class="row">
+                    <div class="card  text-white bg-dark mb-3" style="max-width: 540px;">
+                        <div class="row no-gutters">
+                            <div class="col-md-4">
+                                <img src="/uploads/images/users/{{ show.picture }}" class="card-img img-thumbnail" alt="...">
+                            </div>
+                            <div class="col-md-8">
+                                <div class="card-body">
+                                    <h5 class="card-title">{{ show.name }}</h5>
+                                    <p class="card-text"> Description: {{ show.name }}</p>
+{#                                    TODO  gérer si un artiste en particulier #}
+{#                                    <p class="card-text"><small class="text-muted">Faut pas le dire mais je#}
+{#                                            coute {{ user.price }} par show</small></p>#}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+         {%  endif %}
+    </div>
+
+
+
+{% endblock %}

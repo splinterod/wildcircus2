@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New Artistes{% endblock %}
+
+{% block body %}
+    <div class="container">
+    <h1>Create new Artistes</h1>
+
+    {{ include('artistes/_form.html.twig') }}
+
+    <a  class="fontColorSecondary" href="{{ path('artistes_index') }}">back to list</a>
+    </div>
+{% endblock %}
