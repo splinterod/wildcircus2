@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Shows;
 use App\Form\Shows1Type;
+use App\Repository\OrganisationRepository;
 use App\Repository\ShowsRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -18,10 +19,14 @@ class ShowsController extends AbstractController
     /**
      * @Route("/", name="shows_index", methods={"GET"})
      */
-    public function index(ShowsRepository $showsRepository): Response
+    public function index(ShowsRepository $showsRepository, OrganisationRepository $organisationRepository): Response
     {
+        $userIsOrga = $organisationRepository->findBy(['id'=>$_GET['id']]);
+
+
         return $this->render('shows/index.html.twig', [
             'shows' => $showsRepository->findAll(),
+            'organisateurs' => $userIsOrga
         ]);
     }
 

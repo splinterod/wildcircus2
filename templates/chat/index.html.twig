@@ -1,0 +1,46 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Chat index{% endblock %}
+
+{% block body %}
+
+    <pre>{{ dump() }}</pre>
+
+    <div class="container">
+        <div class="col-4">Vos contacts</div>
+
+    </div>
+
+
+
+
+    <h1>Chat index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Comment</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for chat in chats %}
+            <tr>
+                <td>{{ chat.id }}</td>
+                <td>{{ chat.comment }}</td>
+                <td>
+                    <a href="{{ path('chat_show', {'id': chat.id}) }}">show</a>
+                    <a href="{{ path('chat_edit', {'id': chat.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="3">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('chat_new') }}">Create new</a>
+{% endblock %}

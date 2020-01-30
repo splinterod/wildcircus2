@@ -1,0 +1,38 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Spectacles{% endblock %}
+
+{% block body %}
+    <h1>Spectacles</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ spectacle.id }}</td>
+            </tr>
+            <tr>
+                <th>Name</th>
+                <td>{{ spectacle.name }}</td>
+            </tr>
+            <tr>
+                <th>Location</th>
+                <td>{{ spectacle.location }}</td>
+            </tr>
+            <tr>
+                <th>Date</th>
+                <td>{{ spectacle.date ? spectacle.date|date('Y-m-d') : '' }}</td>
+            </tr>
+            <tr>
+                <th>Picture</th>
+                <td>{{ spectacle.picture }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('spectacles_index') }}">back to list</a>
+
+    <a href="{{ path('spectacles_edit', {'id': spectacle.id}) }}">edit</a>
+
+    {{ include('spectacles/_delete_form.html.twig') }}
+{% endblock %}

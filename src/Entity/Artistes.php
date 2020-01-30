@@ -70,9 +70,15 @@ class Artistes implements UserInterface
      */
     private $shows;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Chat", mappedBy="artiste")
+     */
+    private $chats;
+
     public function __construct()
     {
         $this->shows = new ArrayCollection();
+        $this->chats = new ArrayCollection();
     }
 
     public function __toString()
@@ -268,6 +274,37 @@ class Artistes implements UserInterface
             // set the owning side to null (unless already changed)
             if ($show->getArtistes() === $this) {
                 $show->setArtistes(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Chat[]
+     */
+    public function getChats(): Collection
+    {
+        return $this->chats;
+    }
+
+    public function addChat(Chat $chat): self
+    {
+        if (!$this->chats->contains($chat)) {
+            $this->chats[] = $chat;
+            $chat->setArtiste($this);
+        }
+
+        return $this;
+    }
+
+    public function removeChat(Chat $chat): self
+    {
+        if ($this->chats->contains($chat)) {
+            $this->chats->removeElement($chat);
+            // set the owning side to null (unless already changed)
+            if ($chat->getArtiste() === $this) {
+                $chat->setArtiste(null);
             }
         }
 

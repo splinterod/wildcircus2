@@ -1,0 +1,41 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Spectacles index{% endblock %}
+
+{% block body %}
+    <h1>Spectacles index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Name</th>
+                <th>Location</th>
+                <th>Date</th>
+                <th>Picture</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for spectacle in spectacles %}
+            <tr>
+                <td>{{ spectacle.id }}</td>
+                <td>{{ spectacle.name }}</td>
+                <td>{{ spectacle.location }}</td>
+                <td>{{ spectacle.date ? spectacle.date|date('Y-m-d') : '' }}</td>
+                <td>{{ spectacle.picture }}</td>
+                <td>
+                    <a href="{{ path('spectacles_show', {'id': spectacle.id}) }}">show</a>
+                    <a href="{{ path('spectacles_edit', {'id': spectacle.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="6">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('spectacles_new') }}">Create new</a>
+{% endblock %}

@@ -4,7 +4,7 @@
     <div class="container">
         <div class="row">
             {% if is_granted('ROLE_USER') %}
-                <a class="nav-item nav-link nav-item nav-link " href="{{ path('app_logout') }}">J'ai plus envie d'etre
+                <a class="nav-item nav-link nav-item nav-link text-secondary" href="{{ path('app_logout') }}">J'ai plus envie d'etre
                     connecté</a>
             {% else %}
                 <a class="nav-item nav-link fontColorSecondary" href="{{ path('app_logout') }}">J'ai très très envie de

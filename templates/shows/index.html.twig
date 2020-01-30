@@ -3,37 +3,34 @@
 {% block title %}Shows index{% endblock %}
 
 {% block body %}
-    <h1>Shows index</h1>
+    <pre>{{ dump() }}</pre>
+    <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
+        <div class="carousel-inner">
+            {% for show in shows %}
+                <div class="carousel-item {{ loop.index == 1  ? 'active' : '' }} col-10 offset-1 col-md-4 offset-md-4 mt-5 mb-5">
+                    <img class="img-thumbnail"
+                         src="{{ asset('/uploads/images/users/' ~ show.picture) | imagine_filter('my_thumb_filter') }}"
+                         alt="First slide">
 
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>Name</th>
-                <th>Description</th>
-                <th>Picture</th>
-                <th>actions</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for show in shows %}
-            <tr>
-                <td>{{ show.id }}</td>
-                <td>{{ show.name }}</td>
-                <td>{{ show.description }}</td>
-                <td>{{ show.picture }}</td>
-                <td>
-                    <a href="{{ path('shows_show', {'id': show.id}) }}">show</a>
-                    <a href="{{ path('shows_edit', {'id': show.id}) }}">edit</a>
-                </td>
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="5">no records found</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
+                    <div class="d-md-block mt-5 text-center col-12 col-md-4 offset-md-2 mt-5 mb-5">
+                        <h5>Artiste: {{ show.artistes.name }}</h5>
+                        <p>Description: {{ show.description }}</p>
+                        <p><a class="text-secondary" href="{{ path('chat_index' , { id:organisateurs[0].id , idArtiste: show.artistes.id}) }}">Rentrer en contact</a> </p>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
 
-    <a href="{{ path('shows_new') }}">Create new</a>
+
+        <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="sr-only">Previous</span>
+        </a>
+        <a class="carousel-control-next" href="#carouselExampleControls" role="button" data-slide="next" style="margin-left:-250px;">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="sr-only">Next</span>
+        </a>
+    </div>
+
+
 {% endblock %}

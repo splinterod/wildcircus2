@@ -60,9 +60,15 @@ class Organisation implements UserInterface
      */
     private $spectacles;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Chat", mappedBy="organisateur")
+     */
+    private $chats;
+
     public function __construct()
     {
         $this->spectacles = new ArrayCollection();
+        $this->chats = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -229,6 +235,37 @@ class Organisation implements UserInterface
             // set the owning side to null (unless already changed)
             if ($spectacle->getOrganisation() === $this) {
                 $spectacle->setOrganisation(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Chat[]
+     */
+    public function getChats(): Collection
+    {
+        return $this->chats;
+    }
+
+    public function addChat(Chat $chat): self
+    {
+        if (!$this->chats->contains($chat)) {
+            $this->chats[] = $chat;
+            $chat->setOrganisateur($this);
+        }
+
+        return $this;
+    }
+
+    public function removeChat(Chat $chat): self
+    {
+        if ($this->chats->contains($chat)) {
+            $this->chats->removeElement($chat);
+            // set the owning side to null (unless already changed)
+            if ($chat->getOrganisateur() === $this) {
+                $chat->setOrganisateur(null);
             }
         }
 

@@ -9,6 +9,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Core\Security;
 
 /**
  * @Route("/organisation")
@@ -16,23 +17,40 @@ use Symfony\Component\Routing\Annotation\Route;
 class OrganisationController extends AbstractController
 {
     /**
-     * @Route("/", name="organisation_index", methods={"GET"})
+     * @Route("/", name="organisation_index", methods={"POST","GET"})
      */
-    public function index(OrganisationRepository $organisationRepository): Response
+    public function index(OrganisationRepository $organisationRepository, Request $request, $organisation="" ): Response
     {
+
+
         $user = $this->getUser();
 
-        $userIsOrga = $organisationRepository->findBy(['mail'=>$user->getMail()]);
+        if (isset($_POST['mail'])) {
+            $userIsOrga = $organisationRepository->findBy(['mail'=>$_POST['mail']]);
+//            $request->getSession()->set(
+//                Security::LAST_USERNAME,
+//                $_POST['mail']
+//            );
+        } elseif(isset($_GET['organisation']) )
+            $userIsOrga = $organisationRepository->findBy(['mail'=>$_GET['organisation']]);
 
-        if($userIsOrga == []){
-            return $this->render('organisation/index.html.twig', [
-                'organisations' => $organisationRepository->findAll(),
-            ]);
+        else {
+            if($user == null){
+                $userIsOrga = [];
+            } else {
+                $userIsOrga = $organisationRepository->findBy(['mail'=>$user->getMail()]);
+
+            }
         }
 
+        if($userIsOrga == []){
+            return $this->render('organisation/login.html.twig');
+        }
+//        si tout est bon est deconnecte le artiste
 
-        return $this->render('organisation/index.html.twig', [
-            'organisations' => $organisationRepository->findAll(),
+
+        return $this->render('organisation/home.html.twig', [
+            'organisation' => $userIsOrga,
         ]);
     }
 
